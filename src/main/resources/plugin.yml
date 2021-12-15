@@ -1,0 +1,9 @@
+name: CommandsPlus
+version: '${project.version}'
+main: me.joey.commandsplus.CommandsPlus
+api-version: 1.18
+authors: [ JoeyBalardeta ]
+description: A plugin for Minecraft
+
+commands:
+  c+:
