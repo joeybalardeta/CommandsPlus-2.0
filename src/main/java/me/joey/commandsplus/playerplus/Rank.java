@@ -8,7 +8,7 @@ public class Rank {
     private ChatColor rankColor;
 
     public Rank (){
-        rankName = "None";
+        rankName = "Member";
         this.setColor();
     }
 

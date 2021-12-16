@@ -235,6 +235,11 @@ public class Utils {
     }
 
 
+    public static int randomInt(int min, int max){
+        Random random = new Random();
+        return random.nextInt(max - min + 1) + min;
+    }
+
     public static void amongus(Player p){
         BukkitScheduler scheduler = CommandsPlus.getInstance().getServer().getScheduler();
 
@@ -340,6 +345,15 @@ public class Utils {
             public void run() {
 
                 p.getWorld().playSound(p.getLocation(), main, 1.0f, 1.4f);
+            }
+        }, delay);
+
+        delay += longDelay;
+
+        scheduler.scheduleSyncDelayedTask(CommandsPlus.getInstance(), new Runnable() {
+            public void run() {
+
+                p.getWorld().strikeLightning(p.getLocation());
             }
         }, delay);
     }

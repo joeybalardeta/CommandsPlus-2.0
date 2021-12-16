@@ -20,16 +20,19 @@ public class UtilityCommand extends SubCommand {
     @Override
     public void onCommand(Player p, String[] args) {
 
-        // exits if the command sender is not the owner of the server
-        if (!PlayerPlus.playerPlusHashMap.get(p).getRank().getRankName().equalsIgnoreCase("owner")){
-            Utils.sendMessage(p, ChatColor.RED + "Only the server owner can use these commands!");
-            return;
-        }
+        // info command, the only command not rank locked
         if (args[1].equalsIgnoreCase("info")){
             Utils.sendMessage(p, "Commands+ is a plugin created by Joey Balardeta");
             Utils.sendMessage(p, "Currently this is the second official version of the plugin.");
             return;
         }
+
+        // exits if the command sender is not the owner of the server
+        if (!PlayerPlus.playerPlusHashMap.get(p).getRank().getRankName().equalsIgnoreCase("owner")){
+            Utils.sendMessage(p, ChatColor.RED + "Only the server owner can use these commands!");
+            return;
+        }
+
 
         if (args[1].equalsIgnoreCase("serverstats")){
             Utils.sendMessage(p, "Here are the server stats:");

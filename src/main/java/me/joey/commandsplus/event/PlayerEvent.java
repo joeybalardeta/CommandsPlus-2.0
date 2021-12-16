@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -45,4 +46,14 @@ public class PlayerEvent implements Listener {
         }
     }
 
+    @EventHandler
+    public void onPlayerPublicMessage(AsyncPlayerChatEvent event) {
+        event.setCancelled(true);
+        Player p = event.getPlayer();
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            online.sendMessage(ChatColor.WHITE + "[" + PlayerPlus.getPlayerPlus(p).getRank().toString() + ChatColor.WHITE + "] " + ChatColor.AQUA + p.getName() + ChatColor.WHITE + ": " + event.getMessage());
+        }
+
+    }
 }

@@ -6,6 +6,7 @@ import me.joey.commandsplus.event.EventManager;
 import me.joey.commandsplus.playerplus.PlayerPlus;
 import me.joey.commandsplus.sentinel.Sentinel;
 import me.joey.commandsplus.vanillaplus.tabmenu.TabManager;
+import me.joey.commandsplus.vanillaplus.weather.WeatherTweaks;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,6 +36,8 @@ public final class CommandsPlus extends JavaPlugin {
 
     public TabManager tab;
 
+    public WeatherTweaks weatherTweaks;
+
     // runs on plugin start, usually when the server starts up
     @Override
     public void onEnable() {
@@ -57,6 +60,9 @@ public final class CommandsPlus extends JavaPlugin {
         // set up custom tab
         tab = new TabManager(this);
         tab.createTab();
+
+        weatherTweaks = new WeatherTweaks();
+        weatherTweaks.init();
 
 
         for (Player online : Bukkit.getOnlinePlayers()){
