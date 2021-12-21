@@ -2,6 +2,8 @@ package me.joey.commandsplus.event;
 
 import me.joey.commandsplus.CommandsPlus;
 import me.joey.commandsplus.playerplus.PlayerPlus;
+import me.joey.commandsplus.playerplus.Rank;
+import me.joey.commandsplus.sentinel.Sentinel;
 import me.joey.commandsplus.utils.Utils;
 import me.joey.commandsplus.vanillaplus.particles.ParticleData;
 import net.md_5.bungee.api.ChatColor;
@@ -51,8 +53,18 @@ public class PlayerEvent implements Listener {
         event.setCancelled(true);
         Player p = event.getPlayer();
 
+        String rankStr = Sentinel.playerDataConfig.getString("Users." + p.getUniqueId() + ".rank");
+        Rank rank;
+        if (rankStr == null){
+            rank = new Rank();
+        }
+        else{
+            rank = new Rank(rankStr);
+        }
+
+
         for (Player online : Bukkit.getOnlinePlayers()) {
-            online.sendMessage(ChatColor.WHITE + "[" + PlayerPlus.getPlayerPlus(p).getRank().toString() + ChatColor.WHITE + "] " + ChatColor.AQUA + p.getName() + ChatColor.WHITE + ": " + event.getMessage());
+            online.sendMessage(ChatColor.WHITE + "[" + rank.toString() + ChatColor.WHITE + "] " + ChatColor.AQUA + p.getName() + ChatColor.WHITE + ": " + event.getMessage());
         }
 
     }

@@ -5,6 +5,7 @@ import me.joey.commandsplus.playerplus.PlayerPlus;
 import me.joey.commandsplus.sentinel.Sentinel;
 import me.joey.commandsplus.utils.Utils;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -97,6 +98,11 @@ public class FactionCommand extends SubCommand {
             Utils.sendMessage(p, "Invited " + ChatColor.AQUA + args[2] + ChatColor.WHITE + " to " + ChatColor.AQUA + PlayerPlus.getPlayerPlus(p).getFaction() + ChatColor.WHITE + "!");
 
             Sentinel.playerDataConfig.set("Users." + uuid + ".invitedtofaction", PlayerPlus.getPlayerPlus(p).getFaction());
+
+            if (Utils.getPlayer(args[2]) != null){
+                Utils.sendMessage(Utils.getPlayer(args[2]), "You've been invited to " + ChatColor.AQUA + PlayerPlus.getPlayerPlus(p).getFaction());
+            }
+
             return;
         }
 
@@ -127,6 +133,14 @@ public class FactionCommand extends SubCommand {
             Sentinel.playerDataConfig.set("Users." + p.getUniqueId() + ".faction", factionInviteName);
             Sentinel.playerDataConfig.set("Users." + p.getUniqueId() + ".factionRank", "Member");
             Sentinel.save();
+
+
+            for (Player online : Bukkit.getOnlinePlayers()){
+                if (!online.getName().equalsIgnoreCase(p.getName()) && PlayerPlus.getPlayerPlus(online).getFaction() == factionInviteName){
+                    Utils.sendMessage(online, ChatColor.GREEN + p.getName() + ChatColor.WHITE + " has joined " + ChatColor.AQUA + factionInviteName + ChatColor.WHITE + "!");
+                }
+            }
+
             return;
         }
 
@@ -141,10 +155,18 @@ public class FactionCommand extends SubCommand {
                 return;
             }
 
+            String factionName = PlayerPlus.getPlayerPlus(p).getFaction();
+
             Utils.sendMessage(p, "Left " + ChatColor.AQUA + PlayerPlus.getPlayerPlus(p).getFaction() + ChatColor.WHITE + "!");
 
-            Sentinel.playerDataConfig.set("Users." + p.getUniqueId() + ".faction", null);
-            Sentinel.playerDataConfig.set("Users." + p.getUniqueId() + ".factionRank", null);
+            PlayerPlus.getPlayerPlus(p).setFaction(null);
+            PlayerPlus.getPlayerPlus(p).setFactionRank(null);
+
+            for (Player online : Bukkit.getOnlinePlayers()){
+                if (!online.getName().equalsIgnoreCase(p.getName()) && PlayerPlus.getPlayerPlus(online).getFaction() == factionName){
+                    Utils.sendMessage(online, ChatColor.GREEN + p.getName() + ChatColor.WHITE + " has joined " + ChatColor.AQUA + factionName + ChatColor.WHITE + "!");
+                }
+            }
 
             return;
         }

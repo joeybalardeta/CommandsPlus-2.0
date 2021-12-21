@@ -7,10 +7,14 @@ import me.joey.commandsplus.sentinel.Sentinel;
 import me.joey.commandsplus.utils.Utils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class InfoCommand extends SubCommand {
     @Override
@@ -35,10 +39,39 @@ public class InfoCommand extends SubCommand {
         // fetch faction and rank from player data files
         String faction = Sentinel.playerDataConfig.getString("Users." + uuid + ".faction");
         String rankStr = Sentinel.playerDataConfig.getString("Users." + uuid + ".rank");
-        Rank rank = new Rank(rankStr == null ? "None" : rankStr);
+        Rank rank;
+        if (rankStr == null){
+            rank = new Rank();
+        }
+        else{
+            rank = new Rank(rankStr);
+        }
 
         if (faction == null){
             faction = "None";
+        }
+
+        int playerKills = 0;
+        int blocksMined = 0;
+        int diamondsMined = 0;
+        int ancientDebrisMined = 0;
+
+        if (Bukkit.getPlayer(UUID.fromString(uuid)) != null){
+
+            Player target = Bukkit.getPlayer(UUID.fromString(uuid));
+            PlayerPlus targetPlus = PlayerPlus.getPlayerPlus(target);
+
+            playerKills = targetPlus.getPlayerKills();
+            blocksMined = targetPlus.getBlocksMined();
+            diamondsMined = targetPlus.getDiamondsMined();
+            ancientDebrisMined = targetPlus.getAncientDebrisMined();
+        }
+        else{
+            OfflinePlayer target = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+            playerKills = target.getStatistic(Statistic.PLAYER_KILLS);
+            blocksMined = target.getStatistic(Statistic.MINE_BLOCK);
+            diamondsMined = target.getStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE) + target.getStatistic(Statistic.MINE_BLOCK, Material.DEEPSLATE_DIAMOND_ORE);
+            ancientDebrisMined = target.getStatistic(Statistic.PLAYER_KILLS, Material.ANCIENT_DEBRIS);
         }
 
         // print out stats to command sender
@@ -47,6 +80,14 @@ public class InfoCommand extends SubCommand {
         Utils.sendMessage(p, "UUID: " + ChatColor.GOLD + uuid);
         Utils.sendMessage(p, "Faction: " + ChatColor.AQUA + faction);
         Utils.sendMessage(p, "Rank: " + rank.toString());
+        Utils.sendMessage(p, "Players Killed: " + ChatColor.RED + playerKills);
+        Utils.sendMessage(p, "Blocks Mined: " + ChatColor.GREEN + blocksMined);
+        Utils.sendMessage(p, "Diamond Ore Mined: " + ChatColor.GREEN + diamondsMined);
+        Utils.sendMessage(p, "Ancient Debris Mined: " + ChatColor.GREEN + ancientDebrisMined);
+
+
+
+
 
     }
 

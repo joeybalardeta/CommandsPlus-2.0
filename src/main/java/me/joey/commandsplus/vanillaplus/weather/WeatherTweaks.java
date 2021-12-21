@@ -13,10 +13,9 @@ public class WeatherTweaks {
             @Override
             public void run() {
 
-                if (Utils.randomInt(1, 10) == 3 && !instance.getServer().getWorld("world").hasStorm()){
+                if (Utils.randomInt(1, 10) == 3 && !instance.getServer().getWorld("world").hasStorm()) {
                     instance.getServer().getWorld("world").setStorm(true);
                 }
-
             }
         }, 0L, 12000L);
     }

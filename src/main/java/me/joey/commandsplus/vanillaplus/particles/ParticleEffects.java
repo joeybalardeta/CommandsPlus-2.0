@@ -79,21 +79,24 @@ public class ParticleEffects {
                     particle.setID(taskID);
                 }
 
+                for (int i = 0; i < 1; i++){
+                    lookDirDouble = Utils.getPlayerDirectionFloat(p);
+                    lookDirPi = ((lookDirDouble * Math.PI) / 180) + (5 * Math.PI / 6);
+                    var = rand.nextInt(240);
+                    rotation = ((var * Math.PI) / 180.0) - Math.PI;
+                    distanceTemp = rand.nextInt(100) + 50;
+                    distance = distanceTemp / 100.0;
+                    heightTemp = rand.nextInt(200) + 20;
+                    height = heightTemp / 100.0;
 
-                lookDirDouble = Utils.getPlayerDirectionFloat(p);
-                lookDirPi = ((lookDirDouble * Math.PI) / 180) + (5 * Math.PI / 6);
-                var = rand.nextInt(240);
-                rotation = ((var * Math.PI) / 180.0) - Math.PI;
-                distanceTemp = rand.nextInt(100) + 50;
-                distance = distanceTemp / 100.0;
-                heightTemp = rand.nextInt(200) + 20;
-                height = heightTemp / 100.0;
+
+                    loc = p.getLocation();
+                    first = loc.clone().add(Math.cos(rotation + lookDirPi) * distance, height, Math.sin(rotation + lookDirPi) * distance);
+
+                    p.getWorld().spawnParticle(Particle.FLAME, first, 0);
+                }
 
 
-                loc = p.getLocation();
-                first = loc.clone().add(Math.cos(rotation + lookDirPi) * distance, height, Math.sin(rotation + lookDirPi) * distance);
-
-                p.getWorld().spawnParticle(Particle.FLAME, first, 0);
 
 
             }

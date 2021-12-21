@@ -61,8 +61,9 @@ public final class CommandsPlus extends JavaPlugin {
         tab = new TabManager(this);
         tab.createTab();
 
-        weatherTweaks = new WeatherTweaks();
-        weatherTweaks.init();
+        // too much rain, disabled for the time being
+//        weatherTweaks = new WeatherTweaks();
+//        weatherTweaks.init();
 
 
         for (Player online : Bukkit.getOnlinePlayers()){

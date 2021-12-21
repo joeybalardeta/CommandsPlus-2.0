@@ -20,7 +20,7 @@ public class Rank {
 
     public void setColor(){
         if (this.rankName.equalsIgnoreCase("owner")){
-            this.rankColor = ChatColor.DARK_RED;
+            this.rankColor = ChatColor.RED;
             return;
         }
         if (this.rankName.equalsIgnoreCase("sheriff")){

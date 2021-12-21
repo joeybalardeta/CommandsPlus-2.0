@@ -37,7 +37,7 @@ public class CoordinateCommand extends SubCommand {
             int y = loc.getBlockY();
             int z = loc.getBlockZ();
             for (Player online : Bukkit.getOnlinePlayers()) {
-                Utils.sendMessage(p,ChatColor.AQUA + p.getName() + ChatColor.WHITE + "'s coordinates are: " + ChatColor.GREEN + x + ChatColor.WHITE + ", " + ChatColor.GREEN + y + ChatColor.WHITE + ", " + ChatColor.GREEN + z);
+                Utils.sendMessage(online,ChatColor.AQUA + p.getName() + ChatColor.WHITE + "'s coordinates are: " + ChatColor.GREEN + x + ChatColor.WHITE + ", " + ChatColor.GREEN + y + ChatColor.WHITE + ", " + ChatColor.GREEN + z);
             }
 
             return;

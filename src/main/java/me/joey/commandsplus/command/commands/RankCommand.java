@@ -5,8 +5,8 @@ import me.joey.commandsplus.playerplus.PlayerPlus;
 import me.joey.commandsplus.playerplus.Rank;
 import me.joey.commandsplus.sentinel.Sentinel;
 import me.joey.commandsplus.utils.Utils;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -43,6 +43,10 @@ public class RankCommand extends SubCommand {
         Rank rank = new Rank(args[2]);
 
         Utils.sendMessage(p, "Set " + ChatColor.AQUA + username + ChatColor.WHITE + "'s rank to " + rank.toString());
+
+        if (Utils.getPlayer(username) != null){
+            Utils.sendMessage(Utils.getPlayer(username), "Your rank has been set to " + rank.toString());
+        }
     }
 
     @Override

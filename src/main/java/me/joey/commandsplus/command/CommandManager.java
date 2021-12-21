@@ -29,6 +29,7 @@ public class CommandManager implements CommandExecutor {
         this.commands.add(new RankCommand());
         this.commands.add(new FactionCommand());
         this.commands.add(new CoordinateCommand());
+        this.commands.add(new TopCommand());
     }
 
     @Override

@@ -3,6 +3,8 @@ package me.joey.commandsplus.playerplus;
 import me.joey.commandsplus.sentinel.Sentinel;
 import me.joey.commandsplus.vanillaplus.particles.ParticleData;
 import me.joey.commandsplus.vanillaplus.particles.ParticleEffects;
+import org.bukkit.Material;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -20,7 +22,6 @@ public class PlayerPlus {
     public PlayerPlus (Player player) {
         playerPlusHashMap.put(player, this);
         this.player = player;
-
 
 
         this.particle = new ParticleData(player.getUniqueId());
@@ -91,6 +92,50 @@ public class PlayerPlus {
 
     public void setRank(Rank rank){
         this.rank = rank;
+    }
+
+
+
+
+    // stat grabbing functions
+
+    public int getPlayerKills(){
+        return this.player.getStatistic(Statistic.PLAYER_KILLS);
+    }
+
+    public int getBlocksMined(){
+        int total = 0;
+        for (Material material : Material.values()){
+            try {
+                total += this.player.getStatistic(Statistic.MINE_BLOCK, material);
+            }
+            catch (Exception e){
+
+            }
+        }
+
+        return total;
+
+    }
+
+    public int getDiamondsMined(){
+        try {
+            return (this.player.getStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE) + this.player.getStatistic(Statistic.MINE_BLOCK, Material.DEEPSLATE_DIAMOND_ORE));
+        }
+        catch (Exception e) {
+            return 0;
+        }
+
+    }
+
+    public int getAncientDebrisMined(){
+        try {
+            return this.player.getStatistic(Statistic.MINE_BLOCK, Material.ANCIENT_DEBRIS);
+        }
+        catch (Exception e) {
+            return 0;
+        }
+
     }
 
 }
